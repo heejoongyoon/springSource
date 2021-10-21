@@ -1,0 +1,24 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.freeboard.mapper.FreeboardMapper">
+	<select id="list" resultType="freeboardVo">
+	SELECT ROWNUM RNUM
+     , T.LVL, T.NUM, T.TITLE, T.WRITER, T.P_NUM
+	FROM 
+	(
+	    SELECT LEVEL LVL
+	         , NUM
+	         , LPAD(' ', 2*(LEVEL-1)) || TITLE AS TITLE
+	         , WRITER
+	         , P_NUM
+	    FROM   FREEBOARD
+	    START WITH P_NUM IS NULL
+	    CONNECT BY PRIOR NUM = P_NUM
+	) T
+	</select>
+</mapper>
+
+
+
+
+
+
